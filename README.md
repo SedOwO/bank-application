@@ -1,4 +1,4 @@
-﻿# Bank API  
+# Bank API  
 
 ### Database
 
