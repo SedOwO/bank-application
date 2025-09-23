@@ -305,31 +305,3 @@ LANGUAGE plpgsql;
 ```
 
 
-
-
--------------------------------------------------------------
-### WORK IN PROGRESS
-#### API Design
-#### Bank
-GET: /api/banks                 DONE  
-GET: /api/banks/{id}            DONE  
-POST: /api/banks                DONE  
-PUT: /api/banks/{id}  
-DELETE: /api/banks/{id}  
-
-
-#### Customer
-GET: /api/customers  
-GET: /api/customers/{id}  
-POST: /api/customers  
-PUT: /api/customers/{id}  
-DELETE: /api/customers/{id}  
-
-
-#### Account
-GET: /api/accounts/  
-GET: /api/accounts/{id}  
-\*GET: /api/customers/{customer\_id}/accounts
-POST: /api/accounts  
-PUT: /api/accounts/{id}  
-DELETE: /api/accounts{id}
