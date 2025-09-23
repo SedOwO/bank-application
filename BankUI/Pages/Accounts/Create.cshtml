@@ -1,0 +1,61 @@
+﻿@page
+@model BankUI.Pages.Accounts.CreateModel
+@{
+	ViewData["Title"] = "Create Account";
+}
+
+<h1>Create Account</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Account.CustomerId" class="form-label"></label>
+        <input asp-for="Account.CustomerId" class="form-control" />
+        <span asp-validation-for="Account.CustomerId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.AccountType" class="form-label"></label>
+        <select asp-for="Account.AccountType" class="form-select">
+            <option value="">-- Select Account Type --</option>
+            <option value="Savings">Savings</option>
+            <option value="Current">Current</option>
+        </select>
+        <span asp-validation-for="Account.AccountType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.AccountNumber" class="form-label"></label>
+        <input asp-for="Account.AccountNumber" class="form-control" />
+        <span asp-validation-for="Account.AccountNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Account.Balance" class="form-label"></label>
+        <input asp-for="Account.Balance" class="form-control" />
+        <span asp-validation-for="Account.Balance" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Bank</label>
+        <select asp-for="Account.BankId" class="form-select">
+            <option value="">-- Select Bank --</option>
+            @foreach (var bank in Model.Banks)
+            {
+                <option value="@bank.BankId">@bank.BankName</option>
+            }
+        </select>
+        <span asp-validation-for="Account.BankId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="Index" class="btn btn-secondary">Go Back</a>  
+
+</form>
+

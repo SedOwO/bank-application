@@ -1,0 +1,89 @@
+using BankMqSub.Configs;
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Data.Common;
+using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Channels;
+
+namespace BankMqSub
+{
+    public class BankSubWorker : BackgroundService
+    {
+        private readonly RabbitMqSettings _settings;
+        private IConnection? _connection;
+        private IChannel? _channel;
+
+        public BankSubWorker(IOptions<RabbitMqSettings> options)
+        {
+            _settings = options.Value;
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            var factory = new ConnectionFactory
+            {
+                HostName = _settings.HostName,
+                UserName = _settings.UserName,
+                Password = _settings.Password,
+                VirtualHost = _settings.VirtualHost
+            };
+
+            _connection = await factory.CreateConnectionAsync();
+            _channel = await _connection.CreateChannelAsync();
+
+            await _channel.ExchangeDeclareAsync(
+                exchange: _settings.ExchangeName,
+                type: ExchangeType.Direct,
+                durable: true,
+                autoDelete: false
+            );
+
+
+            await _channel.QueueDeclareAsync(
+                queue: _settings.QueueName,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null
+            );
+
+            await _channel.QueueBindAsync(
+                queue: _settings.QueueName,
+                exchange: _settings.ExchangeName,
+                routingKey: _settings.RoutingKey
+            );
+
+
+            var consumer = new AsyncEventingBasicConsumer(_channel);
+            consumer.ReceivedAsync += async (model, ea) =>
+            {
+                try
+                {
+                    byte[] body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    Console.WriteLine($"[x] Receieved: {message}");
+                    await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"[!] Error Processing message. {e.Message}");
+                    await _channel.BasicNackAsync(deliveryTag: ea.DeliveryTag, false, true);
+                }
+            };
+
+            await _channel.BasicConsumeAsync(queue: _settings.QueueName, autoAck: false, consumer: consumer);
+        }
+
+        public override void Dispose()
+        {
+            _channel?.Dispose();
+            _connection?.Dispose();
+            base.Dispose();
+        }
+
+
+    }
+}

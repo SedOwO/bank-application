@@ -1,0 +1,39 @@
+﻿@page "{id:int}"
+@model BankUI.Pages.Customers.DeleteModel
+@{
+	ViewData["Title"] = "Delete Customer";
+}
+
+<h2> Delete Customer </h2>
+
+<div class="alert alert-warning">
+	Are you sure you want to delete this customer
+</div>
+
+<dl class="row">
+	<dt class="col-sm-2">ID</dt>
+	<dd class="col-sm-2">@Model.Customer.CustomerId</dd>
+
+	<dt class="col-sm-2">First Name</dt>
+	<dd class="col-sm-2">@Model.Customer.FirstName</dd>
+
+	<dt class="col-sm-2">Last Name</dt>
+	<dd class="col-sm-2">@Model.Customer.LastName</dd>
+
+	<dt class="col-sm-2">DOB</dt>
+	<dd class="col-sm-2">@Model.Customer.Dob</dd>
+
+	<dt class="col-sm-2">e-mail</dt>
+	<dd class="col-sm-2">@Model.Customer.Email</dd>
+
+	<dt class="col-sm-2">Phone Number</dt>
+	<dd class="col-sm-2">@Model.Customer.Phone</dd>
+
+	<dt class="col-sm-2">Address</dt>
+	<dd class="col-sm-2">@Model.Customer.Address</dd>
+</dl>
+
+<form method="post">
+	<button type="submit" class="btn btn-danger">Delete</button>
+	<a asp-page="Index" class="btn btn-seconday">Cancel</a>
+</form>

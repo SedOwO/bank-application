@@ -1,0 +1,37 @@
+﻿@page
+@model BankUI.Pages.Banks.IndexModel
+@{
+	ViewData["Banks"] = "Banks";
+}
+
+<h2>Banks</h2>
+<a class="btn btn-primary" asp-page="Create">Create Bank</a>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Bank Name</th>
+			<th>Branch</th>
+			<th>IFSC</th>
+			<th>Address</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var bank in Model.Banks)
+		{
+			<tr>
+				<td>@bank.BankId</td>
+				<td>@bank.BankName</td>
+				<td>@bank.BranchName</td>
+				<td>@bank.IfscCode</td>
+				<td>@bank.Address</td>
+				<td>
+					<a asp-page="Edit" asp-route-id="@bank.BankId" class="btn btn-sm btn-warning">Edit</a>
+					<a asp-page="Delete" asp-route-id="@bank.BankId" class="btn btn-sm btn-warning">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

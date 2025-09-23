@@ -1,0 +1,39 @@
+﻿@page "{id:int}"
+@model BankUI.Pages.Banks.EditModel
+@{
+	ViewData["Title"] = "Edit Bank";
+}
+
+<h2>Edit Bank</h2>
+
+<form method="post">
+	<input type="hidden" asp-for="Bank.BankId" />
+
+	<div class="form-group">
+		<label asp-for="Bank.BankName"></label>
+		<input asp-for="Bank.BankName" class="form-control" />
+		<span asp-validation-for="Bank.BankName" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Bank.BranchName"></label>
+		<input asp-for="Bank.BranchName" class="form-control" />
+		<span asp-validation-for="Bank.BranchName" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Bank.IfscCode"></label>
+		<input asp-for="Bank.IfscCode" class="form-control" />
+		<span asp-validation-for="Bank.IfscCode" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Bank.Address"></label>
+		<input asp-for="Bank.Address" class="form-control" />
+		<span asp-validation-for="Bank.Address" class="text-danger"></span>
+	</div>
+
+	<button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+	<a asp-page="Index" class="btn btn-secondary mt-3">Cancel</a>
+	
+
+</form>

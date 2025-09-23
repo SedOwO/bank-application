@@ -1,0 +1,30 @@
+﻿@page "{id:int}"
+@model BankUI.Pages.Banks.DeleteModel
+@{
+	ViewData["Title"] = "Delete Bank";
+}
+
+<h2>Delete Bank</h2>
+
+<div class="alert alert-warning">
+	Are you sure you want to delet this bank
+</div>
+
+<dl class="row">
+	<dt class="col-sm-2">ID</dt>
+	<dd class="col-sm-2">@Model.Bank.BankId</dd>
+	
+	<dt class="col-sm-2">Bank Name</dt>
+	<dd class="col-sm-2">@Model.Bank.BankName</dd>
+
+	<dt class="col-sm-2">Branch Name</dt>
+	<dd class="col-sm-2">@Model.Bank.BranchName</dd>
+
+	<dt class="col-sm-2">IFSC Code</dt>
+	<dd class="col-sm-2">@Model.Bank.IfscCode</dd>
+</dl>
+
+<form method="post">
+	<button type="submit" class="btn btn-danger">Delete</button>
+	<a asp-page="Index" class="btn btn-secondary">Cancel</a>
+</form>
