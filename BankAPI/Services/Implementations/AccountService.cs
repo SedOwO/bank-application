@@ -31,7 +31,7 @@ namespace BankAPI.Services.Implementations
 
             if (accountId >= 0)
             {
-                var message = $"Bank created: {account.AccountId} ({account.AccountNumber}), ID: {accountId}";
+                var message = $"Account created: {accountId} ({account.AccountNumber}), ID: {accountId}";
                 await _rabbitMqPublisher.PublishMessage(message);
             }
 
@@ -94,7 +94,7 @@ namespace BankAPI.Services.Implementations
 
             var result = await _accountRepository.UpdateAccountAsync(accountId, account);
 
-            var message = $"Account updated: {account.AccountId} ({account.AccountNumber}), ID: {accountId}";
+            var message = $"Account updated: {accountId} ({account.AccountNumber}), ID: {accountId}";
             await _rabbitMqPublisher.PublishMessage(message);
 
             return result;

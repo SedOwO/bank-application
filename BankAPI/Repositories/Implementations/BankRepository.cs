@@ -98,8 +98,8 @@ namespace BankAPI.Repositories.Implementations
         // <Bank?> because the funciton is nullable(may return null value)
         public async Task<Bank?> GetBankByIdAsync(int bankId)
         {
-			try
-			{
+            try
+            {
                 using NpgsqlConnection conn = new NpgsqlConnection(_connectionString);
                 await conn.OpenAsync();
 
@@ -122,11 +122,11 @@ namespace BankAPI.Repositories.Implementations
                     };
                 }
                 return null;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> UpdateBankAsync(int bankId, BankRequest bank)

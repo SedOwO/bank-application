@@ -5,7 +5,6 @@ namespace BankAPI.Models.Request
 {
     public class AccountRequest
     {
-        public int AccountId { get; set; }
         public int CustomerId { get; set; }
         public int BankId { get; set; }
         public string? AccountNumber { get; set; }
