@@ -20,7 +20,7 @@ namespace BankUI.Pages.Banks
         {
             var client = _clientFactory.CreateClient("BankApi");
 
-            var bank = await client.GetFromJsonAsync<Bank>($"bank/{id}");
+            var bank = await client.GetFromJsonAsync<Bank>($"bank?id={id}");
             if (bank == null)
             {
                 return NotFound();
@@ -36,7 +36,7 @@ namespace BankUI.Pages.Banks
 
             var client = _clientFactory.CreateClient("BankApi");
 
-            var response = await client.PutAsJsonAsync($"bank/{Bank.BankId}", Bank);
+            var response = await client.PutAsJsonAsync($"bank?id={Bank.BankId}", Bank);
 
             if (response.IsSuccessStatusCode)
             {
