@@ -17,23 +17,22 @@ namespace BankAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Bank>> GetAllBanks()
+        public async Task<ActionResult<Bank>> GetBanks([FromQuery] int? id)
         {
-            var banks = await _bankService.GetAllBanksAsync();
-            return Ok(banks);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Bank>> GetBankById(int id)
-        {
-            var bank = await _bankService.GetBankByIdAsync(id);
-
-            if (bank == null)
+            if (id.HasValue)
             {
-                return NotFound(new { Message = $"Bank with id {id} not found" });
+                var bank = await _bankService.GetBankByIdAsync(id.Value);
+
+                if (bank == null)
+                {
+                    return NotFound(new { Message = $"Bank with id {id} not found" });
+                }
+
+                return Ok(bank);
             }
 
-            return Ok(bank);
+            var banks = await _bankService.GetAllBanksAsync();
+            return Ok(banks);
         }
 
         [HttpPost]
@@ -52,7 +51,8 @@ namespace BankAPI.Controllers
                     Address = bank.Address
                 };
 
-                return CreatedAtAction(nameof(GetBankById), new { id = newBankId }, newBank);
+                var locationUrl = Url.Action(nameof(GetBanks), "Bank", new { id = newBankId }, Request.Scheme);
+                return Created(locationUrl!, newBank);
             }
             catch (ArgumentException aex)
             {
@@ -64,8 +64,8 @@ namespace BankAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBank(int id, [FromBody] BankRequest bank)
+        [HttpPut]
+        public async Task<IActionResult> UpdateBank([FromQuery] int id, [FromBody] BankRequest bank)
         {
             if (bank == null)
                 return BadRequest("bank data is required");
@@ -79,8 +79,8 @@ namespace BankAPI.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBank(int id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBank([FromQuery] int id)
         {
             var deletedBank = await _bankService.DeleteBankAsync(id);
 
