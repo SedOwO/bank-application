@@ -140,7 +140,7 @@ namespace BankAPI.Repositories.Implementations
                 using var cmd = new NpgsqlCommand(
                     "SELECT public.UpdateAccount(@accountid ,@accounttype, @balance);", conn);
 
-                cmd.Parameters.AddWithValue("accountid", account.AccountId);
+                cmd.Parameters.AddWithValue("accountid", accountId);
                 cmd.Parameters.AddWithValue("accounttype", account.AccountType.ToString());
                 cmd.Parameters.AddWithValue("balance", account.Balance);
 
