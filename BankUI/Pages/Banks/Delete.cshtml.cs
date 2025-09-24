@@ -19,7 +19,7 @@ namespace BankUI.Pages.Banks
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var client = _clientFactory.CreateClient("BankApi");
-            var bank = await client.GetFromJsonAsync<Bank>($"bank/{id}");
+            var bank = await client.GetFromJsonAsync<Bank>($"bank?id={id}");
 
             if (bank == null)
             {
@@ -34,7 +34,7 @@ namespace BankUI.Pages.Banks
         {
             var client = _clientFactory.CreateClient("BankApi");
 
-            var response = await client.DeleteAsync($"bank/{id}");
+            var response = await client.DeleteAsync($"bank?id={id}");
 
             if (response.IsSuccessStatusCode)
             {
